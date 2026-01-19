@@ -3,7 +3,6 @@ package com.vttish.minescrap.core.event;
 import com.vttish.minescrap.api.event.Listenable;
 import com.vttish.minescrap.api.event.Subscription;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
