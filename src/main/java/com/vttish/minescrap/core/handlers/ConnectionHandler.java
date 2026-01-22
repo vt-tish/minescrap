@@ -1,11 +1,7 @@
 package com.vttish.minescrap.core.handlers;
 
-import com.vttish.minescrap.api.data.Location;
 import com.vttish.minescrap.api.event.Events;
 import com.vttish.minescrap.core.MinecraftBotImpl;
-import com.vttish.minescrap.core.entity.PlayerImpl;
-
-import java.util.UUID;
 
 public class ConnectionHandler {
     private final MinecraftBotImpl minecraftBot;

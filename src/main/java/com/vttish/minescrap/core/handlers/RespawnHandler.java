@@ -2,7 +2,6 @@ package com.vttish.minescrap.core.handlers;
 
 import com.vttish.minescrap.api.event.Events;
 import com.vttish.minescrap.core.MinecraftBotImpl;
-import com.vttish.minescrap.core.event.EventRegister;
 
 public class RespawnHandler {
     private final MinecraftBotImpl minecraftBot;

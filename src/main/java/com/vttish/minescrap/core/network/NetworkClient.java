@@ -1,7 +1,5 @@
 package com.vttish.minescrap.core.network;
 
-import java.util.UUID;
-
 public interface NetworkClient {
     void connect();
     void disconnect();

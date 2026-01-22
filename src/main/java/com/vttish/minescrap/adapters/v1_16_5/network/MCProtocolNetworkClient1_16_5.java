@@ -1,7 +1,5 @@
 package com.vttish.minescrap.adapters.v1_16_5.network;
 
-import com.github.steveice10.mc.auth.data.GameProfile;
-import com.github.steveice10.mc.protocol.MinecraftConstants;
 import com.github.steveice10.mc.protocol.MinecraftProtocol;
 import com.github.steveice10.packetlib.Client;
 import com.github.steveice10.packetlib.event.session.DisconnectedEvent;
@@ -11,8 +9,6 @@ import com.github.steveice10.packetlib.packet.Packet;
 import com.github.steveice10.packetlib.tcp.TcpSessionFactory;
 import com.vttish.minescrap.core.MinecraftBotImpl;
 import com.vttish.minescrap.core.network.NetworkClient;
-
-import java.util.UUID;
 
 public class MCProtocolNetworkClient1_16_5 implements NetworkClient {
     private final Client client;
