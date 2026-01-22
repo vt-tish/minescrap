@@ -12,7 +12,12 @@ public interface Events {
     }
 
     @FunctionalInterface
-    interface Spawn extends Listenable {
-        void onSpawn();
+    interface Join extends Listenable {
+        void onJoin();
+    }
+
+    @FunctionalInterface
+    interface Respawn extends Listenable {
+        void onRespawn();
     }
 }
