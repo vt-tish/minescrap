@@ -9,6 +9,8 @@ public interface NetworkClient {
 
     boolean isConnected();
 
+    void setPacketListener(PacketListener listener);
+
     interface PacketListener {
         void onPackedReceived(Object packet);
         void onDisconnected(String reason);

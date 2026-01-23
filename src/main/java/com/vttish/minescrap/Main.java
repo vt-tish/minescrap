@@ -20,7 +20,10 @@ public class Main {
             System.out.println("Username: " + bot.getUsername());
             System.out.println("UUID: " + bot.getPlayer().getUuid());
             System.out.println("EntityId: " + bot.getPlayer().getEntityId());
+            bot.chat("/an215");
         });
+
+        bot.on(Events.Chat.class, System.out::println);
 
         bot.connect();
 

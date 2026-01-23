@@ -5,16 +5,16 @@ import com.github.steveice10.mc.protocol.packet.ingame.client.player.ClientPlaye
 import com.github.steveice10.mc.protocol.packet.ingame.client.world.ClientTeleportConfirmPacket;
 import com.github.steveice10.mc.protocol.packet.ingame.server.entity.player.ServerPlayerPositionRotationPacket;
 import com.vttish.minescrap.api.data.Location;
-import com.vttish.minescrap.core.MinecraftBotImpl;
-import com.vttish.minescrap.core.handlers.PlayerHandler;
+import com.vttish.minescrap.core.network.NetworkClient;
+import com.vttish.minescrap.core.service.PlayerService;
 
 public class MovementHandler1_16_5 {
-    private final MinecraftBotImpl minecraftBot;
-    private final PlayerHandler playerHandler;
+    private final NetworkClient networkClient;
+    private final PlayerService playerService;
 
-    public MovementHandler1_16_5(MinecraftBotImpl minecraftBot, PlayerHandler playerHandler) {
-        this.minecraftBot = minecraftBot;
-        this.playerHandler = playerHandler;
+    public MovementHandler1_16_5(NetworkClient networkClient, PlayerService playerService) {
+        this.networkClient = networkClient;
+        this.playerService = playerService;
     }
 
     public void handle(ServerPlayerPositionRotationPacket packet) {
@@ -24,7 +24,7 @@ public class MovementHandler1_16_5 {
         float pitch = packet.getPitch();
         float yaw = packet.getYaw();
 
-        Location currentLocation = minecraftBot.getPlayer().getLocation();
+        Location currentLocation = playerService.getPlayer().getLocation();
 
         if (packet.getRelative().contains(PositionElement.X)) {
             x += currentLocation.x;
@@ -44,9 +44,9 @@ public class MovementHandler1_16_5 {
 
         currentLocation = new Location(x, y, z, pitch, yaw);
 
-        minecraftBot.getNetworkClient().sendPacket(new ClientTeleportConfirmPacket(packet.getTeleportId()));
-        minecraftBot.getNetworkClient().sendPacket(new ClientPlayerPositionRotationPacket(false, x, y, z, yaw, pitch));
+        networkClient.sendPacket(new ClientTeleportConfirmPacket(packet.getTeleportId()));
+        networkClient.sendPacket(new ClientPlayerPositionRotationPacket(false, x, y, z, yaw, pitch));
 
-        playerHandler.handlePositionRotation(currentLocation);
+        playerService.handlePositionRotation(currentLocation);
     }
 }

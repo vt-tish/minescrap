@@ -8,40 +8,24 @@ import com.github.steveice10.mc.protocol.packet.ingame.server.entity.player.Serv
 import com.github.steveice10.mc.protocol.packet.ingame.server.window.ServerConfirmTransactionPacket;
 import com.github.steveice10.mc.protocol.packet.login.server.LoginSuccessPacket;
 import com.github.steveice10.packetlib.packet.Packet;
-import com.vttish.minescrap.adapters.v1_16_5.handlers.JoinGameHandler1_16_5;
-import com.vttish.minescrap.adapters.v1_16_5.handlers.MovementHandler1_16_5;
+import com.vttish.minescrap.adapters.v1_16_5.handlers.Handlers1_16_5;
 import com.vttish.minescrap.adapters.v1_16_5.util.ComponentHelper;
-import com.vttish.minescrap.api.data.Location;
-import com.vttish.minescrap.core.MinecraftBotImpl;
-import com.vttish.minescrap.core.entity.PlayerImpl;
-import com.vttish.minescrap.core.handlers.ChatHandler;
-import com.vttish.minescrap.core.handlers.ConnectionHandler;
-import com.vttish.minescrap.core.handlers.PlayerHandler;
-import com.vttish.minescrap.core.handlers.RespawnHandler;
+import com.vttish.minescrap.core.service.CoreServices;
 import com.vttish.minescrap.core.network.NetworkClient;
-import org.checkerframework.checker.units.qual.C;
-
-import java.util.UUID;
 
 public class PacketListener1_16_5 implements NetworkClient.PacketListener {
-    private final MinecraftBotImpl minecraftBot;
+    private final CoreServices coreServices;
+    private final NetworkClient networkClient;
+    private final Handlers1_16_5 handlers1_16_5;
 
-    private final MovementHandler1_16_5 movementHandler1_16_5;
-    private final JoinGameHandler1_16_5 joinGameHandler1_16_5;
-
-    private final PlayerHandler playerHandler;
-    private final ConnectionHandler connectionHandler;
-    private final ChatHandler chatHandler;
-    private final RespawnHandler respawnHandler;
-
-    public PacketListener1_16_5(MinecraftBotImpl minecraftBot) {
-        this.minecraftBot = minecraftBot;
-        this.playerHandler = new PlayerHandler(minecraftBot);
-        this.movementHandler1_16_5 = new MovementHandler1_16_5(minecraftBot, playerHandler);
-        this.connectionHandler = new ConnectionHandler(minecraftBot);
-        this.joinGameHandler1_16_5 = new JoinGameHandler1_16_5(minecraftBot, connectionHandler);
-        this.chatHandler = new ChatHandler(minecraftBot);
-        this.respawnHandler = new RespawnHandler(minecraftBot);
+    public PacketListener1_16_5(
+            NetworkClient networkClient,
+            CoreServices coreServices,
+            Handlers1_16_5 handlers1_16_5
+    ) {
+        this.coreServices = coreServices;
+        this.networkClient = networkClient;
+        this.handlers1_16_5 = handlers1_16_5;
     }
 
     @Override
@@ -51,35 +35,27 @@ public class PacketListener1_16_5 implements NetworkClient.PacketListener {
         }
 
         if (packet instanceof ServerConfirmTransactionPacket p) {
-            minecraftBot.getNetworkClient().sendPacket(new ClientConfirmTransactionPacket(
+            networkClient.sendPacket(new ClientConfirmTransactionPacket(
                     p.getWindowId(),
                     p.getActionId(),
                     p.isAccepted())
             );
         } else if (packet instanceof ServerPlayerPositionRotationPacket p) {
-            movementHandler1_16_5.handle(p);
+            handlers1_16_5.movementHandler1_16_5.handle(p);
         } else if (packet instanceof ServerChatPacket p) {
-            chatHandler.handle(ComponentHelper.toPlainText(p.getMessage()));
+            coreServices.chatService.handleChat(ComponentHelper.toPlainText(p.getMessage()));
         }
         else if (packet instanceof ServerRespawnPacket) {
-            respawnHandler.handle();
+            coreServices.spawnService.handleRespawn();
         } else if (packet instanceof ServerJoinGamePacket p) {
-            joinGameHandler1_16_5.handle(p);
+            handlers1_16_5.joinGameHandler1_16_5.handle(p);
         } else if (packet instanceof LoginSuccessPacket p) {
-            minecraftBot.setPlayer(new PlayerImpl(
-                    p.getProfile().getName(),
-                    20,
-                    20,
-                    new Location(),
-                    false,
-                    -1,
-                    p.getProfile().getId()
-            ));
+            coreServices.connectionService.handleLogin(p.getProfile().getName(), p.getProfile().getId());
         }
     }
 
     @Override
     public void onDisconnected(String reason) {
-        connectionHandler.handleDisconnect(reason);
+        coreServices.connectionService.handleDisconnect(reason);
     }
 }

@@ -7,36 +7,19 @@ import com.github.steveice10.packetlib.event.session.PacketReceivedEvent;
 import com.github.steveice10.packetlib.event.session.SessionAdapter;
 import com.github.steveice10.packetlib.packet.Packet;
 import com.github.steveice10.packetlib.tcp.TcpSessionFactory;
-import com.vttish.minescrap.core.MinecraftBotImpl;
 import com.vttish.minescrap.core.network.NetworkClient;
 
 public class MCProtocolNetworkClient1_16_5 implements NetworkClient {
     private final Client client;
-    private final PacketListener packetListener;
 
-    public MCProtocolNetworkClient1_16_5(String username, String host, int port, MinecraftBotImpl minecraftBot) {
+    public MCProtocolNetworkClient1_16_5(String username, String host, int port) {
         MinecraftProtocol protocol = new MinecraftProtocol(username);
 
         this.client = new Client(host, port, protocol, new TcpSessionFactory());
-        this.packetListener = new PacketListener1_16_5(minecraftBot);
-
-        throwIfSessionIsNotValid();
-        client.getSession().addListener(new SessionAdapter() {
-            @Override
-            public void packetReceived(PacketReceivedEvent event) {
-                packetListener.onPackedReceived(event.getPacket());
-            }
-
-            @Override
-            public void disconnected(DisconnectedEvent event) {
-                packetListener.onDisconnected(event.getReason());
-            }
-        });
     }
 
     @Override
     public void connect() {
-        throwIfSessionIsNotValid();
         this.client.getSession().connect();
     }
 
@@ -47,7 +30,6 @@ public class MCProtocolNetworkClient1_16_5 implements NetworkClient {
 
     @Override
     public void disconnect(String reason) {
-        throwIfSessionIsNotValid();
         if (client.getSession().isConnected()) {
             client.getSession().disconnect(reason);
         }
@@ -59,20 +41,26 @@ public class MCProtocolNetworkClient1_16_5 implements NetworkClient {
             throw new IllegalArgumentException("[MCProtocolNetworkClient]: Object should be an instance of Packet");
         }
 
-        throwIfSessionIsNotValid();
         client.getSession().send((Packet) packet);
     }
 
     @Override
     public boolean isConnected() {
-        throwIfSessionIsNotValid();
         return client.getSession().isConnected();
     }
 
-    private void throwIfSessionIsNotValid() {
-        if (client.getSession() == null) {
-            throw new NullPointerException("[MCProtocolNetworkClient]: Client or client session is null");
-        }
-    }
+    @Override
+    public void setPacketListener(PacketListener listener) {
+        client.getSession().addListener(new SessionAdapter() {
+            @Override
+            public void packetReceived(PacketReceivedEvent event) {
+                listener.onPackedReceived(event.getPacket());
+            }
 
+            @Override
+            public void disconnected(DisconnectedEvent event) {
+                listener.onDisconnected(event.getReason());
+            }
+        });
+    }
 }

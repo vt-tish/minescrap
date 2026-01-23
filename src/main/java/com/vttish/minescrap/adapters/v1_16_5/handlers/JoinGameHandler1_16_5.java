@@ -6,24 +6,24 @@ import com.github.steveice10.mc.protocol.data.game.setting.SkinPart;
 import com.github.steveice10.mc.protocol.packet.ingame.client.ClientPluginMessagePacket;
 import com.github.steveice10.mc.protocol.packet.ingame.client.ClientSettingsPacket;
 import com.github.steveice10.mc.protocol.packet.ingame.server.ServerJoinGamePacket;
-import com.vttish.minescrap.core.MinecraftBotImpl;
-import com.vttish.minescrap.core.handlers.ConnectionHandler;
+import com.vttish.minescrap.core.network.NetworkClient;
+import com.vttish.minescrap.core.service.ConnectionService;
 
 import java.util.List;
 
 public class JoinGameHandler1_16_5 {
-    private final MinecraftBotImpl minecraftBot;
-    private final ConnectionHandler connectionHandler;
+    private final NetworkClient networkClient;
+    private final ConnectionService connectionService;
 
-    public JoinGameHandler1_16_5(MinecraftBotImpl minecraftBot, ConnectionHandler connectionHandler) {
-        this.minecraftBot = minecraftBot;
-        this.connectionHandler = connectionHandler;
+    public JoinGameHandler1_16_5(NetworkClient networkClient, ConnectionService connectionService) {
+        this.networkClient = networkClient;
+        this.connectionService = connectionService;
     }
 
     public void handle(ServerJoinGamePacket packet) {
-        connectionHandler.handleJoinGame(packet.getEntityId());
+        connectionService.handleJoinGame(packet.getEntityId());
 
-        minecraftBot.getNetworkClient().sendPacket(new ClientSettingsPacket(
+        networkClient.sendPacket(new ClientSettingsPacket(
                 "en_us",
                 2,
                 ChatVisibility.FULL,
@@ -34,7 +34,7 @@ public class JoinGameHandler1_16_5 {
 
         byte[] data = new byte[] { 7, 118, 97, 110, 105, 108, 108, 97 };
 
-        minecraftBot.getNetworkClient().sendPacket(
+        networkClient.sendPacket(
                 new ClientPluginMessagePacket("minecraft:brand", data)
         );
     }

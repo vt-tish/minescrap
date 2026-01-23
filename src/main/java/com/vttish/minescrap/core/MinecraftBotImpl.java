@@ -4,29 +4,29 @@ import com.vttish.minescrap.api.MinecraftBot;
 import com.vttish.minescrap.api.entity.Player;
 import com.vttish.minescrap.api.event.Listenable;
 import com.vttish.minescrap.api.event.Subscription;
-import com.vttish.minescrap.core.entity.PlayerImpl;
 import com.vttish.minescrap.core.event.EventRegister;
 import com.vttish.minescrap.core.network.ActionSender;
 import com.vttish.minescrap.core.network.NetworkClient;
-
-import java.util.function.Function;
+import com.vttish.minescrap.core.service.CoreServices;
 
 public class MinecraftBotImpl implements MinecraftBot {
     private final String username;
-    private PlayerImpl player;
     private final EventRegister eventRegister = new EventRegister();
 
-    private final NetworkClient networkClient;
-    private final ActionSender actionSender;
+    private NetworkClient networkClient;
+    private ActionSender actionSender;
+    private final CoreServices coreServices;
 
     public MinecraftBotImpl(
             String username,
-            Function<MinecraftBotImpl, NetworkClient> networkClientFactory,
-            Function<MinecraftBotImpl, ActionSender> actionSenderFactory
+            NetworkClient networkClient,
+            ActionSender actionSender
     ) {
         this.username = username;
-        this.networkClient = networkClientFactory.apply(this);
-        this.actionSender = actionSenderFactory.apply(this);
+
+        this.networkClient = networkClient;
+        this.actionSender = actionSender;
+        this.coreServices = new CoreServices(this);
     }
 
     @Override
@@ -51,15 +51,7 @@ public class MinecraftBotImpl implements MinecraftBot {
 
     @Override
     public void chat(String message) {
-        if (message.isEmpty()) {
-            throw new IllegalArgumentException("[MinecraftBotImpl]: Message is empty");
-        }
-
-        if (!networkClient.isConnected()) {
-            throw new IllegalArgumentException("[MinecraftBotImpl]: Client is not connected");
-        }
-
-        actionSender.sendChat(message);
+        coreServices.chatService.chat(message);
     }
 
     @Override
@@ -69,7 +61,7 @@ public class MinecraftBotImpl implements MinecraftBot {
 
     @Override
     public Player getPlayer() {
-        return player;
+        return coreServices.playerService.getPlayer();
     }
 
     @Override
@@ -86,15 +78,15 @@ public class MinecraftBotImpl implements MinecraftBot {
         return eventRegister;
     }
 
-    public PlayerImpl getPlayerImpl() {
-        return player;
-    }
-
-    public void setPlayer(PlayerImpl player) {
-        this.player = player;
-    }
-
     public NetworkClient getNetworkClient() {
         return networkClient;
+    }
+
+    public ActionSender getActionSender() {
+        return actionSender;
+    }
+
+    public CoreServices getCoreServices() {
+        return coreServices;
     }
 }
