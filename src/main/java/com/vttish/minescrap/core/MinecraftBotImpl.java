@@ -13,8 +13,8 @@ public class MinecraftBotImpl implements MinecraftBot {
     private final String username;
     private final EventRegister eventRegister = new EventRegister();
 
-    private NetworkClient networkClient;
-    private ActionSender actionSender;
+    private final NetworkClient networkClient;
+    private final ActionSender actionSender;
     private final CoreServices coreServices;
 
     public MinecraftBotImpl(
@@ -31,7 +31,22 @@ public class MinecraftBotImpl implements MinecraftBot {
 
     @Override
     public void connect() {
-        networkClient.connect();
+        coreServices.connectionService.connect();
+    }
+
+    @Override
+    public void enableReconnect(int delayMs) {
+        coreServices.connectionService.enableReconnect(delayMs);
+    }
+
+    @Override
+    public void enableReconnect() {
+        coreServices.connectionService.enableReconnect(5000);
+    }
+
+    @Override
+    public void disableReconnect() {
+        coreServices.connectionService.disableReconnect();
     }
 
     @Override
@@ -41,12 +56,12 @@ public class MinecraftBotImpl implements MinecraftBot {
 
     @Override
     public void disconnect() {
-        networkClient.disconnect();
+        coreServices.connectionService.disconnect();
     }
 
     @Override
     public void disconnect(String reason) {
-        networkClient.disconnect(reason);
+        coreServices.connectionService.disconnect(reason);
     }
 
     @Override

@@ -10,7 +10,11 @@ public class CoreServices {
 
     public CoreServices(MinecraftBotImpl minecraftBot) {
         this.playerService = new PlayerService();
-        this.connectionService = new ConnectionService(minecraftBot.getEventRegister(), playerService);
+        this.connectionService = new ConnectionService(
+                minecraftBot.getNetworkClient(),
+                minecraftBot.getEventRegister(),
+                playerService
+        );
         this.chatService = new ChatService(
                 minecraftBot.getEventRegister(),
                 minecraftBot.getActionSender(),
