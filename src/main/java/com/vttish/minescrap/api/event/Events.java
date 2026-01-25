@@ -7,6 +7,11 @@ public interface Events {
     }
 
     @FunctionalInterface
+    interface Connect extends Listenable {
+        void onConnect();
+    }
+
+    @FunctionalInterface
     interface Chat extends Listenable {
         void onChat(String message);
     }

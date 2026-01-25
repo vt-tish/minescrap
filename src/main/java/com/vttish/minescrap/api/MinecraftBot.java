@@ -6,6 +6,11 @@ import com.vttish.minescrap.api.event.Subscription;
 
 public interface MinecraftBot {
     void connect();
+
+    void enableReconnect(int delayMs);
+    void enableReconnect();
+    void disableReconnect();
+
     boolean isConnected();
 
     void disconnect();
