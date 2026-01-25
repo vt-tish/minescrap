@@ -31,18 +31,24 @@ public class EventRegister {
     public <T extends Listenable> void notifyListeners(Class<T> event, Consumer<T> action) {
         List<Listenable> list = listeners.get(event);
 
-        if (list != null) {
-            for (T listener : (List<T>)list) {
-                try {
-                    action.accept(listener);
+        if (list == null) {
+            return;
+        }
 
-                    if (onceListeners.contains(listener)) {
+        for (Listenable rawListener : list) {
+            try {
+                T listener = (T) rawListener;
+
+                if (onceListeners.contains(listener)) {
+                    if (onceListeners.remove(listener)) {
                         removeListener(event, listener);
-                        onceListeners.remove(listener);
+                        action.accept(listener);
                     }
-                } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
+                } else {
+                    action.accept(listener);
                 }
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
             }
         }
     }
