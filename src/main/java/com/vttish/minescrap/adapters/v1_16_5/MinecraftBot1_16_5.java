@@ -1,9 +1,8 @@
 package com.vttish.minescrap.adapters.v1_16_5;
 
-import com.vttish.minescrap.adapters.v1_16_5.handlers.Handlers1_16_5;
+import com.vttish.minescrap.adapters.v1_16_5.listeners.PacketListener1_16_5;
 import com.vttish.minescrap.adapters.v1_16_5.network.ActionSender1_16_5;
 import com.vttish.minescrap.adapters.v1_16_5.network.MCProtocolNetworkClient1_16_5;
-import com.vttish.minescrap.adapters.v1_16_5.network.PacketListener1_16_5;
 import com.vttish.minescrap.api.MinecraftBot;
 import com.vttish.minescrap.core.MinecraftBotImpl;
 import com.vttish.minescrap.core.network.ActionSender;
@@ -19,11 +18,9 @@ public class MinecraftBot1_16_5 {
                 actionSender
         );
 
-        Handlers1_16_5 handlers1_16_5 = new Handlers1_16_5(networkClient, minecraftBot.getCoreServices());
         networkClient.setPacketListener(new PacketListener1_16_5(
                 networkClient,
-                minecraftBot.getCoreServices(),
-                handlers1_16_5
+                minecraftBot.getCoreServices()
         ));
 
         return minecraftBot;

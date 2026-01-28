@@ -38,8 +38,8 @@ public class ConnectionService {
         });
     }
 
-    public void handleJoinGame(int entityId) {
-        playerService.setPlayerEntityId(entityId);
+    public void handleJoinGame(int playerEntityId) {
+        playerService.setPlayerEntityId(playerEntityId);
         eventRegister.notifyListeners(Events.Join.class, Events.Join::onJoin);
     }
 

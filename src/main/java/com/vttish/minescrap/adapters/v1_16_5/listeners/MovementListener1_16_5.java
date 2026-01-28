@@ -1,4 +1,4 @@
-package com.vttish.minescrap.adapters.v1_16_5.handlers;
+package com.vttish.minescrap.adapters.v1_16_5.listeners;
 
 import com.github.steveice10.mc.protocol.data.game.entity.player.PositionElement;
 import com.github.steveice10.mc.protocol.packet.ingame.client.player.ClientPlayerPositionRotationPacket;
@@ -6,18 +6,26 @@ import com.github.steveice10.mc.protocol.packet.ingame.client.world.ClientTelepo
 import com.github.steveice10.mc.protocol.packet.ingame.server.entity.player.ServerPlayerPositionRotationPacket;
 import com.vttish.minescrap.api.data.Location;
 import com.vttish.minescrap.core.network.NetworkClient;
+import com.vttish.minescrap.core.network.PacketListener;
 import com.vttish.minescrap.core.service.PlayerService;
 
-public class MovementHandler1_16_5 {
+public class MovementListener1_16_5 implements PacketListener {
     private final NetworkClient networkClient;
     private final PlayerService playerService;
 
-    public MovementHandler1_16_5(NetworkClient networkClient, PlayerService playerService) {
+    public MovementListener1_16_5(NetworkClient networkClient, PlayerService playerService) {
         this.networkClient = networkClient;
         this.playerService = playerService;
     }
 
-    public void handle(ServerPlayerPositionRotationPacket packet) {
+    @Override
+    public void onPackedReceived(Object packet) {
+        if (packet instanceof ServerPlayerPositionRotationPacket p) {
+            handlePositionRotation(p);
+        }
+    }
+
+    private void handlePositionRotation(ServerPlayerPositionRotationPacket packet) {
         double x = packet.getX();
         double y = packet.getY();
         double z = packet.getZ();

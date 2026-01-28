@@ -8,6 +8,7 @@ import com.github.steveice10.packetlib.event.session.SessionAdapter;
 import com.github.steveice10.packetlib.packet.Packet;
 import com.github.steveice10.packetlib.tcp.TcpSessionFactory;
 import com.vttish.minescrap.core.network.NetworkClient;
+import com.vttish.minescrap.core.network.PacketListener;
 
 public class MCProtocolNetworkClient1_16_5 implements NetworkClient {
     private Client client;
