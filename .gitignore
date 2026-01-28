@@ -36,3 +36,6 @@ build/
 
 ### Wireshark ###
 wireshark-caps/
+
+### Local Sandbox ###
+src/test/java/com/vttish/minescrap/ManualBotTest.java
