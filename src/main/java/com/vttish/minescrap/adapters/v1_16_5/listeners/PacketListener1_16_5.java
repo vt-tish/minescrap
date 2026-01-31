@@ -22,6 +22,7 @@ public class PacketListener1_16_5 implements PacketListener {
         this.listeners.add(new MovementListener1_16_5(networkClient, coreServices.playerService));
         this.listeners.add(new ChatListener1_16_5(coreServices.chatService));
         this.listeners.add(new WorldListener1_16_5(coreServices.spawnService));
+        this.listeners.add(new EntityListener1_16_5(coreServices.entityService));
     }
 
     @Override
