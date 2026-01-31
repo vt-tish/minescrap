@@ -1,5 +1,7 @@
 package com.vttish.minescrap.api.event;
 
+import com.vttish.minescrap.api.entity.Entity;
+
 public interface Events {
     @FunctionalInterface
     interface Disconnect extends Listenable {
@@ -24,5 +26,10 @@ public interface Events {
     @FunctionalInterface
     interface Respawn extends Listenable {
         void onRespawn();
+    }
+
+    @FunctionalInterface
+    interface EntitySpawn extends Listenable {
+        void onEntitySpawn(Entity entity);
     }
 }
