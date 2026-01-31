@@ -26,6 +26,6 @@ public class Location {
 
     @Override
     public String toString() {
-        return "[X: " + x + "] [Y: " + y + "] [Z: " + z + "] + [PITCH: " + pitch + "] [YAW: " + yaw + "]";
+        return "[X: " + x + "] [Y: " + y + "] [Z: " + z + "] [PITCH: " + pitch + "] [YAW: " + yaw + "]";
     }
 }
