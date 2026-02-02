@@ -8,6 +8,7 @@ public class CoreServices {
     public final ChatService chatService;
     public final SpawnService spawnService;
     public final EntityService entityService;
+    public final TabListService tabListService;
 
     public CoreServices(MinecraftBotImpl minecraftBot) {
         this.playerService = new PlayerService();
@@ -23,5 +24,6 @@ public class CoreServices {
         );
         this.spawnService = new SpawnService(minecraftBot.getEventRegister());
         this.entityService = new EntityService(minecraftBot.getEventRegister());
+        this.tabListService = new TabListService();
     }
 }
