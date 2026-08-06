@@ -1,15 +1,12 @@
 package com.vttish.minescrap.api.entity;
 
-import com.vttish.minescrap.api.data.Location;
-
-import java.util.UUID;
+import java.util.Optional;
 
 public interface Entity {
-    EntityType getEntityType();
+    int getId();
 
-    int getEntityId();
-    UUID getUuid();
+    <T extends Capability> boolean has(Class<T> capability);
 
-    Location getLocation();
-    boolean isOnGround();
+    <T extends Capability> T as(Class<T> capability);
+    <T extends Capability> Optional<T> asOpt(Class<T> capability);
 }
