@@ -1,5 +1,7 @@
 package com.vttish.minescrap.api.entity;
 
+import com.vttish.minescrap.api.entity.capability.Capability;
+
 import java.util.Optional;
 
 public interface Entity {

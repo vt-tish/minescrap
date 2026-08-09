@@ -1,13 +1,13 @@
 package com.vttish.minescrap.api.entity;
 
-import com.vttish.minescrap.core.entity.component.Component;
+import com.vttish.minescrap.api.entity.component.Component;
 
-import java.util.Set;
+import java.util.Collection;
 
-public interface EntityRegistryReader {
+public interface EntityRegistry {
     <T extends Component> T getComponent(int entityId, Class<T> componentType);
     boolean has(int entityId, Class<? extends Component> componentType);
     boolean has(int entityId, Class<? extends Component>[] componentType);
 
-    Set<Integer> getActiveEntities();
+    Collection<Integer> getActiveEntities();
 }

@@ -1,16 +1,20 @@
 package com.vttish.minescrap.core.entity;
 
-import com.vttish.minescrap.api.entity.Capability;
+import com.vttish.minescrap.api.entity.EntityRegistry;
+import com.vttish.minescrap.api.entity.capability.Capability;
+import com.vttish.minescrap.api.entity.capability.CapabilityFactory;
+import com.vttish.minescrap.api.entity.capability.CapabilityProvider;
 import com.vttish.minescrap.api.entity.Entity;
 
+import java.util.Objects;
 import java.util.Optional;
 
-public class EntityWrapper implements Entity {
+public class DefaultEntity implements Entity {
     private final int id;
     private final EntityRegistry entityRegistry;
     private final CapabilityFactory capabilityFactory;
 
-    public EntityWrapper(int id, EntityRegistry entityRegistry, CapabilityFactory capabilityFactory) {
+    public DefaultEntity(int id, EntityRegistry entityRegistry, CapabilityFactory capabilityFactory) {
         this.id = id;
         this.entityRegistry = entityRegistry;
         this.capabilityFactory = capabilityFactory;
@@ -53,5 +57,17 @@ public class EntityWrapper implements Entity {
         }
 
         return Optional.empty();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        DefaultEntity that = (DefaultEntity) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }
