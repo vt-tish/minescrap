@@ -1,5 +1,7 @@
 package com.vttish.minescrap.core.entity;
 
+import com.vttish.minescrap.api.common.Identifier;
+import com.vttish.minescrap.api.common.math.Vector3d;
 import com.vttish.minescrap.api.entity.EntityRegistry;
 import com.vttish.minescrap.api.entity.capability.Capability;
 import com.vttish.minescrap.api.entity.capability.CapabilityFactory;
@@ -23,6 +25,21 @@ public class DefaultEntity implements Entity {
     @Override
     public int getId() {
         return id;
+    }
+
+    @Override
+    public Identifier getType() {
+        return null;
+    }
+
+    @Override
+    public Vector3d getPosition() {
+        return null;
+    }
+
+    @Override
+    public Vector3d getVelocity() {
+        return null;
     }
 
     @Override
