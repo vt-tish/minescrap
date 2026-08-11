@@ -6,8 +6,10 @@ import com.vttish.minescrap.api.entity.EntityManager;
 import com.vttish.minescrap.api.entity.EntityRegistry;
 import com.vttish.minescrap.api.entity.capability.CapabilityFactory;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import io.avaje.inject.BeanScope;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
+
 
 @Singleton
 public class DefaultMinescrapBot implements MinescrapBot {
@@ -16,17 +18,21 @@ public class DefaultMinescrapBot implements MinescrapBot {
     private final CapabilityFactory capabilityFactory;
     private final EntityManager entityManager;
 
+    private final LifecycleManager lifecycleManager;
+
     @Inject
     public DefaultMinescrapBot(
             MinescrapBotConfig config,
             EntityRegistry entityRegistry,
             CapabilityFactory capabilityFactory,
-            EntityManager entityManager
+            EntityManager entityManager,
+            LifecycleManager lifecycleManager
     ) {
         this.config = config;
         this.entityRegistry = entityRegistry;
         this.capabilityFactory = capabilityFactory;
         this.entityManager = entityManager;
+        this.lifecycleManager = lifecycleManager;
     }
 
     @Override
@@ -43,6 +49,11 @@ public class DefaultMinescrapBot implements MinescrapBot {
     public boolean isConnected() {
         // TODO: Implement network layer to provide this method
         return false;
+    }
+
+    @Override
+    public void shutdown() {
+        lifecycleManager.shutdown();
     }
 
     @Override

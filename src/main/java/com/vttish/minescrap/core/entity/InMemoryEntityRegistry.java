@@ -1,9 +1,8 @@
 package com.vttish.minescrap.core.entity;
 
 import com.vttish.minescrap.api.entity.component.Component;
+import jakarta.inject.Singleton;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.util.*;
 
 @Singleton
@@ -11,10 +10,6 @@ public class InMemoryEntityRegistry implements InternalEntityRegistry {
     private final Set<Integer> activeEntities = new HashSet<>();
     private final Set<Integer> activeEntitiesView = Collections.unmodifiableSet(activeEntities);
     private final Map<Class<? extends Component>, Map<Integer, Component>> componentPools = new IdentityHashMap<>();
-
-    @Inject
-    public InMemoryEntityRegistry() {
-    }
 
     @Override
     public void addEntity(int entityId) {

@@ -3,9 +3,8 @@ package com.vttish.minescrap.core.entity;
 import com.vttish.minescrap.api.entity.Entity;
 import com.vttish.minescrap.api.entity.EntityRegistry;
 import com.vttish.minescrap.api.entity.capability.CapabilityFactory;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
 @Singleton
 public class EntityFactory {

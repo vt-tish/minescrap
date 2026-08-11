@@ -11,7 +11,8 @@ public final class EntityType {
         throw new UnsupportedOperationException();
     }
 
+	public static final Identifier PLAYER = Identifier.of(Identifier.DEFAULT_NAMESPACE, "player");
+	public static final Identifier UNKNOWN = Identifier.of(Identifier.DEFAULT_NAMESPACE, "unknown");
 	public static final Identifier SKELETON = Identifier.of(Identifier.DEFAULT_NAMESPACE, "skeleton");
 	public static final Identifier ZOMBIE = Identifier.of(Identifier.DEFAULT_NAMESPACE, "zombie");
-	public static final Identifier PLAYER = Identifier.of(Identifier.DEFAULT_NAMESPACE, "player");
 }

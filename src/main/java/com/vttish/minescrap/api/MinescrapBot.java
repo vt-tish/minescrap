@@ -12,6 +12,8 @@ public interface MinescrapBot {
     void disconnect();
     boolean isConnected();
 
+    void shutdown();
+
     EntityRegistry entityRegistry();
     CapabilityFactory capabilityFactory();
     EntityManager entityManager();

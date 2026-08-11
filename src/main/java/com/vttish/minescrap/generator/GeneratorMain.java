@@ -12,7 +12,7 @@ public class GeneratorMain {
         RegistryClassGenerator generator = new RegistryClassGenerator(sourceRoot, packageName);
 
         System.out.println("Starting generation...");
-        generator.generate("EntityType", Set.of("player", "zombie", "skeleton"));
+        generator.generate("EntityType", Set.of("unknown", "player", "zombie", "skeleton"));
         System.out.println("Generation finished successfully!");
     }
 }

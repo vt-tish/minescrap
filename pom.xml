@@ -12,7 +12,7 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <dagger.version>2.51.1</dagger.version>
+        <avaje.inject.version>9.11</avaje.inject.version>
     </properties>
 
     <dependencies>
@@ -22,9 +22,9 @@
             <version>4.1.95.Final</version>
         </dependency>
         <dependency>
-            <groupId>com.google.dagger</groupId>
-            <artifactId>dagger</artifactId>
-            <version>${dagger.version}</version>
+            <groupId>io.avaje</groupId>
+            <artifactId>avaje-inject</artifactId>
+            <version>${avaje.inject.version}</version>
         </dependency>
     </dependencies>
 
@@ -37,9 +37,9 @@
                 <configuration>
                     <annotationProcessorPaths>
                         <path>
-                            <groupId>com.google.dagger</groupId>
-                            <artifactId>dagger-compiler</artifactId>
-                            <version>${dagger.version}</version>
+                            <groupId>io.avaje</groupId>
+                            <artifactId>avaje-inject-generator</artifactId>
+                            <version>${avaje.inject.version}</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>

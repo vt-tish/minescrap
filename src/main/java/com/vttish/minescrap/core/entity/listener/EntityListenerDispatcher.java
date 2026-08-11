@@ -1,7 +1,7 @@
 package com.vttish.minescrap.core.entity.listener;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,10 +9,6 @@ import java.util.List;
 public class EntityListenerDispatcher {
     private final List<EntitySpawnListener> spawnListeners = new ArrayList<>();
     private final List<EntityDespawnListener> despawnListeners = new ArrayList<>();
-
-    @Inject
-    protected EntityListenerDispatcher() {
-    }
 
     public void addSpawnListener(EntitySpawnListener listener) {
         spawnListeners.add(listener);
