@@ -11,17 +11,15 @@ import java.util.*;
 
 @Singleton
 public class TrackedEntityManager implements EntityManager {
-    private final EntityRegistry entityRegistry;
     private final EntityFactory entityFactory;
     private final Map<Integer, Entity> entities = new HashMap<>();
+    private final Collection<Entity> entitiesView = Collections.unmodifiableCollection(entities.values());
 
     @Inject
     public TrackedEntityManager(
-            EntityRegistry entityRegistry,
             EntityFactory entityFactory,
             EntityListenerDispatcher listenerDispatcher
     ) {
-        this.entityRegistry = entityRegistry;
         this.entityFactory = entityFactory;
 
         listenerDispatcher.addSpawnListener(this::handleSpawn);
@@ -30,7 +28,7 @@ public class TrackedEntityManager implements EntityManager {
 
     @Override
     public Collection<Entity> getEntities() {
-        return Collections.unmodifiableCollection(entities.values());
+        return entitiesView;
     }
 
     private void handleSpawn(int entityId) {
